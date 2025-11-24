@@ -2614,6 +2614,11 @@ export class Battle {
 			// Grassy Glide priority
 			priority = this.singleEvent('ModifyPriority', move, null, action.pokemon, null, null, priority);
 			priority = this.runEvent('ModifyPriority', action.pokemon, null, move, priority);
+			if (action.pokemon?.style === 'Agile') {
+				priority += 1;
+			} else if (action.pokemon?.style === 'Strong') {
+				priority -= 1;
+			}
 			action.priority = priority + action.fractionalPriority;
 			// In Gen 6, Quick Guard blocks moves with artificially enhanced priority.
 			if (this.gen > 5) action.move.priority = priority;
