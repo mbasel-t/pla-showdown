@@ -34,14 +34,56 @@ export const Formats: import('../sim/dex-formats').FormatList = [
 		ruleset: ['PotD', 'Obtainable', 'Species Clause', 'HP Percentage Mod', 'Cancel Mod', 'Sleep Clause Mod', 'Illusion Level Mod'],
 	},
 	{
-		name: "[PLA] Legends Arceus Style Battles",
-		desc: "Enables Agile/Neutral/Strong styles.",
-		mod: 'gen9',
-		team: 'random',
-		ruleset: ['Standard'],
-		onBegin() {
-			this.add('message', "PLA Battle Styles enabled.");
-	},
+    name: "[PLA] Legends Arceus Style Battles",
+    desc: "Enables Agile/Neutral/Strong styles.",
+    mod: 'gen9',
+    team: 'random',
+    ruleset: ['Standard'],
+
+    onBegin() {
+        this.add('message', "PLA Battle Styles enabled.");
+    },
+
+    actions: {
+        modifyDamage(baseDamage, pokemon, target, move, suppressMessages) {
+            const tr = this.battle.trunc;
+
+            // === PLA STYLE DAMAGE ADJUSTMENTS ===
+            if (pokemon.style === 'Agile') {
+                baseDamage = tr(baseDamage * 0.75);
+            } else if (pokemon.style === 'Strong') {
+                baseDamage = tr(baseDamage * 1.5);
+            }
+
+            // === Standard Showdown pipeline continues ===
+
+            if (!move.type) move.type = '???';
+            const type = move.type;
+
+            if (move.spreadHit) {
+                const spreadModifier = this.battle.gameType === 'freeforall' ? 0.5 : 0.75;
+                baseDamage = this.battle.modify(baseDamage, spreadModifier);
+            }
+
+            baseDamage = this.battle.runEvent('WeatherModifyDamage', pokemon, target, move, baseDamage);
+
+            const isCrit = target.getMoveHitData(move).crit;
+            if (isCrit) {
+                baseDamage = tr(baseDamage * (move.critModifier || (this.battle.gen >= 6 ? 1.5 : 2)));
+            }
+
+            baseDamage = this.battle.randomizer(baseDamage);
+
+            if (type !== '???') {
+                if (pokemon.hasType(type)) {
+                    baseDamage = this.battle.modify(baseDamage, 1.5);
+                }
+            }
+
+            return tr(baseDamage, 16);
+        },
+    },
+},
 	{
 		name: "[Gen 9] Free-For-All Random Battle",
 		mod: 'gen9',
