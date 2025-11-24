@@ -34,12 +34,13 @@ export const Formats: import('../sim/dex-formats').FormatList = [
 		ruleset: ['PotD', 'Obtainable', 'Species Clause', 'HP Percentage Mod', 'Cancel Mod', 'Sleep Clause Mod', 'Illusion Level Mod'],
 	},
 	{
-		name: "[Gen 9] Unrated Random Battle",
+		name: "[PLA] Legends Arceus Style Battles",
+		desc: "Enables Agile/Neutral/Strong styles.",
 		mod: 'gen9',
 		team: 'random',
-		challengeShow: false,
-		rated: false,
-		ruleset: ['Obtainable', 'Species Clause', 'HP Percentage Mod', 'Cancel Mod', 'Sleep Clause Mod', 'Illusion Level Mod'],
+		ruleset: ['Standard'],
+		onBegin() {
+			this.add('message', "PLA Battle Styles enabled.");
 	},
 	{
 		name: "[Gen 9] Free-For-All Random Battle",
