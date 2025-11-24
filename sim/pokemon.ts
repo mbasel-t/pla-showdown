@@ -80,6 +80,11 @@ export class Pokemon {
 	 * (species, gender, level, shininess, tera state).
 	 * @see https://github.com/smogon/pokemon-showdown/blob/master/sim/SIM-PROTOCOL.md#identifying-pok%C3%A9mon
 	 */
+	style: 'Agile' | 'Neutral' | 'Strong' = 'Neutral';
+	this.set = set as PokemonSet;
+	if (typeof set.style == 'string') {
+		this.style = set.style as any;
+	}
 	details: string;
 
 	baseSpecies: Species;
