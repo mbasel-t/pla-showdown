@@ -186,6 +186,18 @@ export const Moves: import('../sim/dex-moves').MoveDataTable = {
 		type: "Flying",
 		contestType: "Cool",
 	},
+	agileaerialace: {
+        inherit: true,
+        name: "Aerial Ace (Agile)",
+        flags: {contact: 1},
+        style: 'agile',
+   },
+    strongaerialace: {
+        inherit: true,
+        name: "Aerial Ace (Strong)",
+        flags: {contact: 1},
+        style: 'strong',
+   },
 	aeroblast: {
 		num: 177,
 		accuracy: 95,
