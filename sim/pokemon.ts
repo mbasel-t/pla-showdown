@@ -630,6 +630,16 @@ export class Pokemon {
 		}
 
 		if (statName === 'spe' && stat > 10000 && !this.battle.format.battle?.trunc) stat = 10000;
+		// PLA custom styles
+		if (this.battle.format.id === 'pla') {
+    const move = this.lastMove;
+    if (move?.style === 'agile') {
+        if (statName === 'atk') stat = Math.floor(stat * 0.5);
+    } else if (move?.style === 'strong') {
+        if (statName === 'atk') stat = Math.floor(stat * 1.5);
+    }
+}
+
 		return stat;
 	}
 
