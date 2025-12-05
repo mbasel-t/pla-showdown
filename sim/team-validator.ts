@@ -54,11 +54,11 @@ export class PokemonSources {
 	 * A set of specific possible PokemonSources; implemented as
 	 * an Array rather than a Set for perf reasons.
 	 */
-	for (const set of team) {
-		if (set.style && !['Agile', 'Neutral', 'Strong'].includes(set.style)) {
-			problems.push('${set.name} has invalid style: ${set.style}');
-		}
-	}
+	//for (const set of team) {
+	//	if (set.style && !['Agile', 'Neutral', 'Strong'].includes(set.style)) {
+	//		problems.push('${set.name} has invalid style: ${set.style}');
+	//	}
+	//}
 	sources: PokemonSource[];
 	/**
 	 * if nonzero: the set also contains all possible sources from
